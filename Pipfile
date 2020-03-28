@@ -9,6 +9,7 @@ verify_ssl = true
 line-bot-sdk = "*"
 flask = "*"
 gunicorn = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"
