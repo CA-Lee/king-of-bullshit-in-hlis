@@ -49,10 +49,10 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    if re.match("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text):
+    if re.match("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text):
         
-        len = int(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][1])
-        topic = str(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][2])
+        len = int(re.findall("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][1])
+        topic = str(re.findall("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][3])
         #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
         reply(topic,len,event)
 
