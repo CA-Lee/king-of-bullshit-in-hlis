@@ -48,7 +48,7 @@ def handle_message(event):
         #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
 
         reply_text = requests.post("https://api.howtobullshit.me/bullshit",json={"Topic":topic,"Minlen":len}).text
-        reply_text = r.content.replace("&nbsp;&nbsp;&nbsp;&nbsp;","　").replace("<br>","\n")
+        reply_text = reply_text.replace("&nbsp;&nbsp;&nbsp;&nbsp;","　").replace("<br>","\n")
 
         line_bot_api.reply_message(
             event.reply_token,
