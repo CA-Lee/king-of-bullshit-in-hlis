@@ -19,6 +19,14 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(os.environ['YOUR_CHANNEL_ACCESS_TOKEN'])
 handler = WebhookHandler(os.environ['YOUR_CHANNEL_SECRET'])
 
+def reply(topic,len,event):
+    reply_text = requests.post("https://api.howtobullshit.me/bullshit",json={"Topic":topic,"Minlen":len}).text
+    reply_text = reply_text.replace("&nbsp;&nbsp;&nbsp;&nbsp;","　").replace("<br>","\n")
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text))
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -43,16 +51,16 @@ def callback():
 def handle_message(event):
 
     if re.match("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text):
+        
         len = int(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][1])
         topic = str(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][2])
         #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
+        reply(topic,len,event)
 
-        reply_text = requests.post("https://api.howtobullshit.me/bullshit",json={"Topic":topic,"Minlen":len}).text
-        reply_text = reply_text.replace("&nbsp;&nbsp;&nbsp;&nbsp;","　").replace("<br>","\n")
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_text))
+    elif re.match("^唬爛王",event.message.text):
+        len = 50
+        topic = "唬爛"
+        reply(topic,len,event)
 
 if __name__ == "__main__":
     app.run()
