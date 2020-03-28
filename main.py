@@ -27,7 +27,6 @@ def reply(topic,len,event):
         event.reply_token,
         TextSendMessage(text=reply_text))
 
-
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -57,7 +56,14 @@ def handle_message(event):
         #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
         reply(topic,len,event)
 
+    elif re.match("^唬爛(王)?\s(.*)",event.message.text):
+
+        len = 150
+        topic = str(re.findall("^唬爛(王)?\s(.*)",event.message.text)[0][1])
+        reply(topic,len,event)
+
     elif re.match("^唬爛王",event.message.text):
+        
         len = 50
         topic = "唬爛"
         reply(topic,len,event)
