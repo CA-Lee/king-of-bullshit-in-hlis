@@ -45,6 +45,9 @@ def callback():
 
     return 'OK'
 
+@app.route("/wake")
+def wake():
+    return "OK"
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
