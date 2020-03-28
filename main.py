@@ -45,7 +45,10 @@ def handle_message(event):
     if re.match("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text):
         len = int(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][1])
         topic = str(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][2])
-        reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
+        #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
+
+        reply_text = requests.post("https://api.howtobullshit.me/bullshit",json={"Topic":topic,"Minlen":len}).text
+        reply_text = r.content.replace("&nbsp;&nbsp;&nbsp;&nbsp;","　").replace("<br>","\n")
 
         line_bot_api.reply_message(
             event.reply_token,
