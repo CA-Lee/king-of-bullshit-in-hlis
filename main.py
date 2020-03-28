@@ -11,6 +11,8 @@ from linebot.models import (
 )
 
 import os
+import requests
+import re
 
 app = Flask(__name__)
 
@@ -39,10 +41,15 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
 
+    if re.match("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text):
+        len = int(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][1])
+        topic = str(re.findall("^唬爛(王)?\s([\d]+)字\s(.*)",event.message.text)[0][2])
+        reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_text))
 
 if __name__ == "__main__":
     app.run()
