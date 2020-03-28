@@ -49,20 +49,20 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    if re.match("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text):
+    if re.match("^唬爛(哥)?\s([\d]+)(字)?\s(.*)",event.message.text):
         
-        len = int(re.findall("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][1])
-        topic = str(re.findall("^唬爛(王)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][3])
+        len = int(re.findall("^唬爛(哥)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][1])
+        topic = str(re.findall("^唬爛(哥)?\s([\d]+)(字)?\s(.*)",event.message.text)[0][3])
         #reply_text = "字數：{len},主題：{topic}".format(len=len,topic=topic)
         reply(topic,len,event)
 
-    elif re.match("^唬爛(王)?\s(.*)",event.message.text):
+    elif re.match("^唬爛(哥)?\s(.*)",event.message.text):
 
         len = 150
-        topic = str(re.findall("^唬爛(王)?\s(.*)",event.message.text)[0][1])
+        topic = str(re.findall("^唬爛(哥)?\s(.*)",event.message.text)[0][1])
         reply(topic,len,event)
 
-    elif re.match("^唬爛王",event.message.text):
+    elif re.match("^唬爛哥",event.message.text):
         
         len = 50
         topic = "唬爛"
